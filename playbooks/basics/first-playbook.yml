@@ -1,0 +1,20 @@
+---
+- name: My first Ansible playbook
+  hosts: linux_servers
+  become: true
+
+  tasks:
+    - name: Create a practice directory
+      file:
+        path: /opt/ansible-playbook-lab
+        state: directory
+        mode: '0755'
+
+    - name: Display the server hostname
+      command: hostname
+      register: server_hostname
+      changed_when: false
+
+    - name: Show the hostname
+      debug:
+        msg: "The managed server is {{ server_hostname.stdout }}"

@@ -1,0 +1,3 @@
+---
+vault_grafana_smtp_user: "your-email@gmail.com"
+vault_grafana_smtp_password: "YOUR_GMAIL_APP_PASSWORD"

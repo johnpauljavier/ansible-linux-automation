@@ -1,0 +1,3 @@
+---
+grafana_smtp_user: "{{ vault_grafana_smtp_user }}"
+grafana_smtp_password: "{{ vault_grafana_smtp_password }}"

@@ -1,0 +1,48 @@
+---
+- name: Generate Grafana SSL certificate
+  hosts: linux_servers
+  become: yes
+
+  tasks:
+    - name: Create Grafana SSL directory
+      ansible.builtin.file:
+        path: /etc/grafana/ssl
+        state: directory
+        owner: root
+        group: grafana
+        mode: '0750'
+
+    - name: Generate self-signed SSL certificate
+      ansible.builtin.command:
+        argv:
+          - openssl
+          - req
+          - -x509
+          - -nodes
+          - -days
+          - '825'
+          - -newkey
+          - rsa:2048
+          - -keyout
+          - /etc/grafana/ssl/grafana.key
+          - -out
+          - /etc/grafana/ssl/grafana.crt
+          - -subj
+          - /CN=192.168.56.105
+          - -addext
+          - subjectAltName=IP:192.168.56.105
+        creates: /etc/grafana/ssl/grafana.crt
+
+    - name: Set certificate permissions
+      ansible.builtin.file:
+        path: /etc/grafana/ssl/grafana.crt
+        owner: root
+        group: grafana
+        mode: '0644'
+
+    - name: Set private key permissions
+      ansible.builtin.file:
+        path: /etc/grafana/ssl/grafana.key
+        owner: root
+        group: grafana
+        mode: '0640'

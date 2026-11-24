@@ -1,0 +1,39 @@
+---
+- name: Configure Grafana Gmail SMTP
+  hosts: linux_servers
+  become: yes
+
+  tasks:
+    - name: Configure Grafana SMTP settings
+      ansible.builtin.ini_file:
+        path: /etc/grafana/grafana.ini
+        section: smtp
+        option: "{{ item.option }}"
+        value: "{{ item.value }}"
+        owner: root
+        group: grafana
+        mode: '0640'
+      loop:
+        - option: enabled
+          value: 'true'
+        - option: host
+          value: smtp.gmail.com:587
+        - option: user
+          value: "{{ grafana_smtp_user }}"
+        - option: password
+          value: "{{ grafana_smtp_password }}"
+        - option: from_address
+          value: "{{ grafana_smtp_user }}"
+        - option: from_name
+          value: Grafana
+        - option: skip_verify
+          value: 'false'
+      no_log: true
+      notify: Restart Grafana
+
+  handlers:
+    - name: Restart Grafana
+      ansible.builtin.systemd:
+        name: grafana-server
+        state: restarted
+        enabled: yes

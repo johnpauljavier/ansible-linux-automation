@@ -1,0 +1,21 @@
+---
+- name: Learning Ansible variables
+  hosts: linux_servers
+  become: true
+
+  vars:
+    lab_directory: /opt/ansible-variable-lab
+    lab_owner: john-paul
+
+  tasks:
+    - name: Create a directory using variables
+      file:
+        path: "{{ lab_directory }}"
+        state: directory
+        owner: "{{ lab_owner }}"
+        group: "{{ lab_owner }}"
+        mode: '0755'
+
+    - name: Display the directory path
+      debug:
+        msg: "The directory {{ lab_directory }} was created successfully."

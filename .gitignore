@@ -1,0 +1,21 @@
+# Ansible Vault and secrets
+vault.yml
+vault-password*
+secrets.yml
+
+# SSH and TLS private keys
+*.pem
+*.key
+id_rsa
+id_ed25519
+
+# Certificates and private key bundles
+*.p12
+*.pfx
+
+# Environment files
+.env
+
+# Backup files
+*.bak
+*.backup
