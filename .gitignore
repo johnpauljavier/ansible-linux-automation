@@ -19,3 +19,6 @@ id_ed25519
 # Backup files
 *.bak
 *.backup
+
+# Local inventory - do not publish private lab IPs
+inventory/inventory.local.ini

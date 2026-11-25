@@ -1,0 +1,28 @@
+---
+- name: Test Ansible GitHub Portfolio Project
+  hosts: linux_servers
+  become: yes
+  gather_facts: yes
+
+  tasks:
+    - name: Display managed server hostname
+      ansible.builtin.debug:
+        msg: "Connected to {{ ansible_facts['hostname'] }}"
+
+    - name: Display operating system
+      ansible.builtin.debug:
+        msg: "{{ ansible_facts['distribution'] }} {{ ansible_facts['distribution_version'] }}"
+
+    - name: Display available memory
+      ansible.builtin.debug:
+        msg: "Available memory: {{ ansible_facts['memory_mb']['real']['free'] }} MB"
+
+    - name: Create test directory
+      ansible.builtin.file:
+        path: /tmp/ansible-github-test
+        state: directory
+        mode: '0755'
+
+    - name: Confirm successful execution
+      ansible.builtin.debug:
+        msg: "GitHub portfolio Ansible test completed successfully!"
